@@ -1,0 +1,36 @@
+﻿@page "/dijkstra"
+@using global::Dijkstra.NET.ShortestPath
+@using global::Dijkstra.NET.Graph
+@inject IDijkstraGraph GraphInt
+@inject IGraph<int,string> Graph
+
+
+
+<h1>Shortest Path with Dijkstra</h1>
+
+<p>Shortest path: @pathLength</p>
+
+<button class="btn btn-primary" @onclick="CalculateDijkstra">Click me</button>
+
+@code {
+    private uint pathLength = 0;
+    private Graph<int, string> graph;
+
+    private void CalculateDijkstra()
+    {
+        graph = new Graph<int, string>();
+    
+        graph.AddNode(1);
+        graph.AddNode(2);
+
+        graph.Connect(1, 2, 5, "some custom information in edge"); //First node has key equal 1
+
+        ShortestPathResult result = graph.Dijkstra(1, 2); //result contains the shortest path
+
+        var path = result.GetPath();
+        pathLength = path.GetEnumerator().Current;
+    }
+
+    
+
+}
